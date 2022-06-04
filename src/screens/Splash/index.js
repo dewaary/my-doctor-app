@@ -32,5 +32,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: color.text.primary,
     marginTop: 20,
+    // fontFamily:
   },
 });
