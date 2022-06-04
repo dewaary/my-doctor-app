@@ -1,5 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {color} from '../../../utils';
 
 const Link = ({title, size, align}) => {
   return (
@@ -14,7 +15,7 @@ export default Link;
 const styles = StyleSheet.create({
   text: (size, align) => ({
     fontSize: size,
-    color: '#7D8797',
+    color: color.text.secondary,
     textDecorationLine: 'underline',
     textAlign: align,
   }),
