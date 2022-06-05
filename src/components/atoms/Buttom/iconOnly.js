@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {IconBackDark} from '../../../assets';
+import {IconBackDark, IconBackWhite} from '../../../assets';
 
 const IconOnly = ({onPress, icon}) => {
   const Icon = () => {
@@ -9,7 +9,7 @@ const IconOnly = ({onPress, icon}) => {
       return <IconBackDark />;
     }
     if (icon === 'back-light') {
-      return <IconBackDark />;
+      return <IconBackWhite />;
     }
     return <IconBackDark />;
   };

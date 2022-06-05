@@ -1,18 +1,18 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {color} from '../../../utils';
+import {IconNext} from '../../../assets';
 
-const ListDoctor = ({image, name, description}) => {
+const ListDoctor = ({image, name, description, type, onPress}) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={image} style={styles.avatar} />
-      <View>
+      <View style={styles.wrapperText}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.desc}>
-          {description}
-        </Text>
+        <Text style={styles.desc}>{description}</Text>
       </View>
-    </View>
+      {type === 'next' && <IconNext />}
+    </TouchableOpacity>
   );
 };
 
@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: color.border,
     alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  wrapperText: {
+    flex: 1,
   },
   avatar: {
     width: 46,

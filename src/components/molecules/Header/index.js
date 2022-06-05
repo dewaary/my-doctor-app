@@ -2,12 +2,22 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Buttom, Gap} from '../..';
 import {color} from '../../../utils';
+import DarkProfileHeader from './DarkProfileHeader';
 
-const Header = ({onPress, title}) => {
+const Header = ({onPress, title, type}) => {
+  if(type === 'dark-profile') {
+    return (
+      <DarkProfileHeader />
+    )
+  }
   return (
-    <View style={styles.container}>
-      <Buttom type="icon-only" icon="back-dark" onPress={onPress} />
-      <Text style={styles.text}>{title}</Text>
+    <View style={styles.container(type)}>
+      <Buttom
+        type="icon-only"
+        icon={type === 'dark' ? 'back-light' : 'back-dark'}
+        onPress={onPress}
+      />
+      <Text style={styles.text(type)}>{title}</Text>
       <Gap width={25} />
     </View>
   );
@@ -16,18 +26,20 @@ const Header = ({onPress, title}) => {
 export default Header;
 
 const styles = StyleSheet.create({
-  container: {
+  container: type => ({
     paddingHorizontal: 16,
     paddingVertical: 20,
-    backgroundColor: 'white',
+    backgroundColor: type === 'dark' ? color.secondary : color.white,
     flexDirection: 'row',
     marginTop: 40,
     alignItems: 'center',
-  },
-  text: {
+    borderBottomLeftRadius: type === 'dark' ? 20 : 0,
+    borderBottomRightRadius: type === 'dark' ? 20 : 0,
+  }),
+  text: type => ({
     flex: 1,
     textAlign: 'center',
     fontSize: 20,
-    color: color.text.primary,
-  },
+    color: type === 'dark' ? color.white : color.text.primary,
+  }),
 });
