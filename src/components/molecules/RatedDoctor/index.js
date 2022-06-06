@@ -1,15 +1,15 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {DummyDoctor1, IconStart} from '../../../assets';
+import { IconStart} from '../../../assets';
 import {color} from '../../../utils';
 
-const RatedDoctor = () => {
+const RatedDoctor = ({name, desc, image, onPress}) => {
   return (
-    <View style={styles.container}>
-      <Image source={DummyDoctor1} style={styles.avatar} />
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      <Image source={image} style={styles.avatar} />
       <View style={styles.profile}>
-        <Text style={styles.name}>Alexa Rachel</Text>
-        <Text style={styles.category}>Pediatrican</Text>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.category}>{desc}</Text>
       </View>
       <View style={styles.rate}>
         <IconStart />
@@ -18,7 +18,7 @@ const RatedDoctor = () => {
         <IconStart />
         <IconStart />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingBottom: 16,
+    alignItems: 'center'
   },
   avatar: {
     width: 50,

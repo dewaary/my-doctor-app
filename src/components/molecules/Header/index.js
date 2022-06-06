@@ -5,10 +5,8 @@ import {color} from '../../../utils';
 import DarkProfileHeader from './DarkProfileHeader';
 
 const Header = ({onPress, title, type}) => {
-  if(type === 'dark-profile') {
-    return (
-      <DarkProfileHeader />
-    )
+  if (type === 'dark-profile') {
+    return <DarkProfileHeader onPress={onPress} />;
   }
   return (
     <View style={styles.container(type)}>

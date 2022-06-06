@@ -9,7 +9,8 @@ import ListDoctor from './ListDoctor';
 import ListHospitals from './ListHospitals';
 import ChatItem from './ChatItem';
 import InputChat from './InputChat';
-
+import Profile from './Profile';
+import ProfileItem from './ProfileItem';
 export {
   Header,
   BottomNavigator,
@@ -22,4 +23,6 @@ export {
   ListHospitals,
   ChatItem,
   InputChat,
+  Profile,
+  ProfileItem,
 };

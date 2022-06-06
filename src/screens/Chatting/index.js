@@ -3,10 +3,14 @@ import React from 'react';
 import {ChatItem, Header, InputChat, ListDoctor} from '../../components';
 import {color} from '../../utils';
 
-const Chatting = () => {
+const Chatting = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Header type={'dark-profile'} title={'Kadek Devi'} />
+      <Header
+        type={'dark-profile'}
+        title={'Kadek Devi'}
+        onPress={() => navigation.goBack()}
+      />
       <Text style={styles.chatDate}>Senin, 21 Maret, 2022</Text>
       <View style={styles.content}>
         <ChatItem isMe />

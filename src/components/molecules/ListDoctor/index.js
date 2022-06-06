@@ -1,12 +1,34 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {color} from '../../../utils';
-import {IconNext} from '../../../assets';
+import {
+  IconEditProfile,
+  IconHelp,
+  IconLanguage,
+  IconNext,
+  IconRate,
+} from '../../../assets';
 
-const ListDoctor = ({image, name, description, type, onPress}) => {
+const ListDoctor = ({image, name, description, type, onPress, icon}) => {
+  const Icon = () => {
+    if (icon === 'EditProfile') {
+      return <IconEditProfile />;
+    }
+    if (icon === 'language') {
+      <IconLanguage />;
+    }
+    if (icon === 'rate') {
+      return <IconRate />;
+    }
+    if (icon === 'help') {
+      return <IconHelp />;
+    }
+    return <IconEditProfile />;
+  };
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Image source={image} style={styles.avatar} />
+      {icon ? <Icon /> : <Image source={image} style={styles.avatar} />}
+      
       <View style={styles.wrapperText}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.desc}>{description}</Text>
@@ -29,6 +51,7 @@ const styles = StyleSheet.create({
   },
   wrapperText: {
     flex: 1,
+    marginLeft: 16,
   },
   avatar: {
     width: 46,
