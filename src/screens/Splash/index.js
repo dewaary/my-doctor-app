@@ -7,18 +7,18 @@ import {getAuth, onAuthStateChanged} from 'firebase/auth';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
-    setTimeout(() => {
-      const auth = getAuth();
-      onAuthStateChanged(auth, user => {
+    const auth = getAuth();
+    const unLogin = onAuthStateChanged(auth, user => {
+      setTimeout(() => {
         if (user) {
-          console.log('user login', user);
           navigation.replace('MainApp');
         } else {
           navigation.replace('GetStarted');
         }
-      });
-    }, 3000);
-  });
+      }, 3000);
+    });
+    return () => unLogin();
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
