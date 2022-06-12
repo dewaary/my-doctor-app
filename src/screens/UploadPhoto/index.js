@@ -1,26 +1,76 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
 import {Buttom, Gap, Header, Link} from '../../components';
-import {IconAddPhoto, ILNullPhoto} from '../../assets';
-import {color} from '../../utils';
+import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
+import {color, storeData} from '../../utils';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {showMessage} from 'react-native-flash-message';
+import {FIREBASE} from '../../config';
 
-const UploadPhoto = ({navigation}) => {
+const UploadPhoto = ({navigation, route}) => {
+  const {fullName, profesion, uid} = route.params;
+  const [hasPhoto, setHasPhoto] = useState(false);
+  const [photoForDB, setPhotoForDB] = useState('');
+  const [photo, setPhoto] = useState(ILNullPhoto);
+  const getImage = () => {
+    launchImageLibrary(
+      {quality: 0.5, maxWidth: 200, maxHeight: 200},
+      response => {
+        if (response.didCancel || response.errorMessage) {
+          showMessage({
+            message: 'oops, sepertinya foto anda jelek :)',
+            type: 'default',
+            backgroundColor: color.error,
+            color: color.white,
+          });
+        } else {
+          console.log('response getImage', response);
+          setPhotoForDB(
+            `data: ${response.assets[0].type};base64, ${response.assets[0].fileName}`,
+          );
+
+          const source = {uri: response.assets[0].uri};
+          setPhoto(source);
+          setHasPhoto(true);
+        }
+      },
+    );
+  };
+
+  const uploadAndContinue = () => {
+    FIREBASE.database()
+      .ref('users/' + uid + '/')
+      .update({photo: photoForDB});
+
+    const data = route.params;
+    data.photo = photoForDB;
+
+    storeData('user', data);
+
+    navigation.replace('MainApp');
+  };
+
   return (
     <View style={styles.container}>
       <Header title="Upload Photo" />
       <View style={styles.content}>
         <View style={styles.profile}>
-          <View style={styles.avatarWrapper}>
-            <Image source={ILNullPhoto} style={styles.avatar} />
-            <IconAddPhoto style={styles.addPhoto} />
-          </View>
-          <Text style={styles.name}>Dewa Ari</Text>
-          <Text style={styles.profesion}>Product Designer</Text>
+          <TouchableOpacity style={styles.avatarWrapper} onPress={getImage}>
+            <Image source={photo} style={styles.avatar} />
+            {hasPhoto ? (
+              <IconRemovePhoto style={styles.addPhoto} />
+            ) : (
+              <IconAddPhoto style={styles.addPhoto} />
+            )}
+          </TouchableOpacity>
+          <Text style={styles.name}>{fullName}</Text>
+          <Text style={styles.profesion}>{profesion}</Text>
         </View>
         <View>
           <Buttom
+            disable={!hasPhoto}
             title="Upload and Continue"
-            onPress={() => navigation.replace('MainApp')}
+            onPress={uploadAndContinue}
           />
           <Gap height={30} />
           <Link
@@ -56,6 +106,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 110,
     height: 110,
+    borderRadius: 100 / 2,
   },
   avatarWrapper: {
     width: 130,

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {color} from '../../../utils';
 import IconOnly from './iconOnly';
@@ -10,6 +10,13 @@ const Buttom = ({type, title, onPress, icon, disable}) => {
   }
   if (type === 'icon-only') {
     return <IconOnly icon={icon} onPress={onPress} />;
+  }
+  if (disable) {
+    return (
+      <View style={styles.disableBg}>
+        <Text style={styles.disableTxt}>{title}</Text>
+      </View>
+    );
   }
   return (
     <TouchableOpacity style={styles.container(type)} onPress={onPress}>
@@ -29,6 +36,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
   }),
+  disableBg: {
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: color.buttom.buttomDisable.background,
+  },
   text: type => ({
     fontSize: 16,
     fontWeight: '600',
@@ -38,4 +50,10 @@ const styles = StyleSheet.create({
         ? color.buttom.secondary.text
         : color.buttom.primary.text,
   }),
+  disableTxt: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: color.buttom.buttomDisable.text,
+  },
 });
